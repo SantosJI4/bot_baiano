@@ -1,0 +1,79 @@
+{
+    "users": {
+        "760560629550940211": {
+            "carteira": 73762,
+            "banco": 999994629,
+            "nivel": 8,
+            "exp": 67,
+            "emprego": "Desempregado",
+            "itens": {
+                "Faca": 1,
+                "Alum\u00ednio": 2,
+                "Espingarda": 1,
+                "Submetralhadora": 1,
+                "Prata": 2
+            },
+            "casado_com": null,
+            "ultimo_trabalho": "2025-05-02T21:36:52.143802",
+            "respeito": 0,
+            "background": "./backgrounds/760560629550940211.png"
+        },
+        "954528052161949747": {
+            "carteira": 0,
+            "banco": 0,
+            "nivel": 1,
+            "exp": 0,
+            "emprego": "Desempregado",
+            "itens": {},
+            "casado_com": null,
+            "ultimo_trabalho": null,
+            "respeito": 0
+        },
+        "1365992622971158559": {
+            "carteira": 0,
+            "banco": 0,
+            "nivel": 1,
+            "exp": 0,
+            "emprego": "Desempregado",
+            "itens": {},
+            "casado_com": null,
+            "ultimo_trabalho": null,
+            "respeito": 0
+        },
+        "898988885156184074": {
+            "carteira": 0,
+            "banco": 0,
+            "nivel": 2,
+            "exp": 147,
+            "emprego": "Faxineiro",
+            "ultimo_trabalho": null,
+            "respeito": 0
+        }
+    },
+    "profissoes": {
+        "Desempregado": {
+            "nivel_minimo": 0,
+            "salario": 0
+        },
+        "Faxineiro": {
+            "nivel_minimo": 1,
+            "salario": 500
+        },
+        "Vendedor": {
+            "nivel_minimo": 5,
+            "salario": 1000
+        },
+        "Gerente": {
+            "nivel_minimo": 10,
+            "salario": 2000
+        },
+        "Empres\u00c3\u00a1rio": {
+            "nivel_minimo": 15,
+            "salario": 5000
+        },
+        "Policial": {
+            "nivel_minimo": 20,
+            "salario": 3000
+        }
+    }
+}

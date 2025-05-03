@@ -1,0 +1,2 @@
+pynacl
+yt-dlp
