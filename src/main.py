@@ -24,7 +24,7 @@ intents = discord.Intents.default()
 intents.message_content = True  # Ativa o acesso ao conteúdo das mensagens
 intents.typing = False
 intents.presences = False
-bot = commands.Bot(command_prefix=get_prefix, intents=intents)
+bot = commands.Bot(command_prefix=get_prefix, intents=intents, help_command=None)
 
 # Função para carregar cogs dinamicamente
 async def load_cogs():
