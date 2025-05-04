@@ -14,11 +14,16 @@ class AkinatorGame(commands.Cog):
         await ctx.send("🤔 Pense em um personagem, e eu tentarei adivinhar! Responda com `sim`, `não`, `não sei`, `provavelmente` ou `provavelmente não`. Para encerrar, digite `parar`.")
 
         try:
-            # Inicia o jogo
+            print("Iniciando o jogo do Akinator...")
             question = self.aki.start_game()
+            print(f"Pergunta inicial: {question}")
             if not question:
-                await ctx.send("❌ Não consegui iniciar o jogo. Tente novamente mais tarde.")
-                return
+              await ctx.send("❌ Não consegui iniciar o jogo. Tente novamente mais tarde.")
+              return
+            print(f"Primeira pergunta: {question}")  # Depuração
+        except Exception as e:
+            print(f"Erro ao iniciar o jogo: {e}")
+            await ctx.send(f"❌ Ocorreu um erro ao iniciar o jogo: {e}")
 
             # Loop de perguntas
             while self.aki.progression <= 80:
