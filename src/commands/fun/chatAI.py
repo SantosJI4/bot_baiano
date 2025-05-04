@@ -31,6 +31,23 @@ class ChatAI(commands.Cog):
             await ctx.send(f"💬 {reply}")
         except Exception as e:
             await ctx.send(f"❌ Ocorreu um erro ao processar sua mensagem: {e}")
+    @commands.command(name="image")
+    async def generate_image(self, ctx, *, prompt):
+      """Gera uma imagem usando a API DALL·E da OpenAI."""
+      await ctx.send("🎨 Gerando sua imagem...")
 
+      try:
+          # Envia a solicitação para a API DALL·E
+          response = openai.Image.create(
+              prompt=prompt,
+              n=1,  # Número de imagens a serem geradas
+              size="512x512"  # Tamanho da imagem
+          )
+
+          # Obtém o URL da imagem gerada
+          image_url = response["data"][0]["url"]
+          await ctx.send(f"🖼️ Aqui está sua imagem: {image_url}")
+      except Exception as e:
+          await ctx.send(f"❌ Ocorreu um erro ao gerar a imagem: {e}")
 async def setup(bot):
     await bot.add_cog(ChatAI(bot))
