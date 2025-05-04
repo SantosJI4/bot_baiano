@@ -107,16 +107,16 @@ class Music(commands.Cog):
         await ctx.send("⏹️ Reprodução encerrada!")
 
     @commands.command(name="music_help")
-async def music_help(self, ctx):
-    """Mostra os comandos de música disponíveis."""
-    commands_list = """
-    **Comandos de Música:**
-    🎵 `!play <termo ou link>` - Reproduz uma música ou playlist do SoundCloud.
-    ⏭️ `!skip` - Pula para a próxima música na fila.
-    ⏹️ `!stop` - Para a reprodução e limpa a fila.
-    ℹ️ `!music_help` - Mostra esta mensagem de ajuda.
-    """
-    await ctx.send(commands_list)
+    async def music_help(self, ctx):
+        """Mostra os comandos de música disponíveis."""
+        commands_list = """
+        **Comandos de Música:**
+        🎵 `!play <termo ou link>` - Reproduz uma música ou playlist do SoundCloud.
+        ⏭️ `!skip` - Pula para a próxima música na fila.
+        ⏹️ `!stop` - Para a reprodução e limpa a fila.
+        ℹ️ `!music_help` - Mostra esta mensagem de ajuda.
+        """
+        await ctx.send(commands_list)
 
 async def setup(bot):
     await bot.add_cog(Music(bot))
