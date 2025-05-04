@@ -63,7 +63,7 @@ class GarticGame(commands.Cog):
         width, height = 400, 200
         background_color = (255, 255, 255)  # Branco
         text_color = (0, 0, 0)  # Preto
-        font_path = "arial.ttf"  # Certifique-se de que a fonte está disponível no sistema
+        font_path = os.path.join(os.path.dirname(__file__), "./assets/fonts/DejaVuSans", "DejaVuSans.ttf")  # Caminho relativo para a fonte
         font_size = 40
 
         # Cria a imagem
@@ -74,6 +74,7 @@ class GarticGame(commands.Cog):
         try:
             font = ImageFont.truetype(font_path, font_size)
         except IOError:
+            print("Fonte não encontrada. Usando fonte padrão.")
             font = ImageFont.load_default()
 
         # Adiciona o texto (embaralhado)
