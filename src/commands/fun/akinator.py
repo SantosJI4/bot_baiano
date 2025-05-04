@@ -10,7 +10,7 @@ class AkinatorGame(commands.Cog):
     @commands.command(name="akinator")
     async def start_akinator(self, ctx):
         """Inicia o jogo do Akinator."""
-        await ctx.send("🤔 Pense em um personagem, e eu tentarei adivinhar! Responda com `sim`, `não`, `não sei`, `provavelmente` ou `provavelmente não`.")
+        await ctx.send("🤔 Pense em um personagem, e eu tentarei adivinhar! Responda com `sim`, `não`, `não sei`, `provavelmente` ou `provavelmente não`. Para encerrar, digite `parar`.")
 
         try:
             question = self.aki.start_game()
