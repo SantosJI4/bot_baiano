@@ -1,2 +1,6 @@
 pynacl
 yt-dlp
+discord.py
+python-dotenv
+Pillow
+youtube_dl
