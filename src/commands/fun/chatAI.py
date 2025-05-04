@@ -41,13 +41,17 @@ class ChatAI(commands.Cog):
           response = openai.Image.create(
               prompt=prompt,
               n=1,  # Número de imagens a serem geradas
-              size="512x512"  # Tamanho da imagem
+              size="256x256"
           )
 
           # Obtém o URL da imagem gerada
           image_url = response["data"][0]["url"]
           await ctx.send(f"🖼️ Aqui está sua imagem: {image_url}")
-      except Exception as e:
-          await ctx.send(f"❌ Ocorreu um erro ao gerar a imagem: {e}")
+      except openai.error.OpenAIError as e:
+          if e.http_status == 500:
+              await ctx.send("❌ O servidor da OpenAI encontrou um erro ao processar sua solicitação. Tente novamente mais tarde.")
+          else:
+              await ctx.send(f"❌ Ocorreu um erro: {e}")
+          
 async def setup(bot):
     await bot.add_cog(ChatAI(bot))
