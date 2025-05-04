@@ -43,7 +43,7 @@ async def on_ready():
     print(f'Bot connected as {bot.user}')
     print("✅ Bot está pronto e conectado ao Discord.")
     await bot.load_extension("commands.economy.cassino")
-
+    await bot.load_extension("commands.moderation.statsdiv")
     # Inicia o loop do evento de carro-forte
     carro_forte_cog = bot.get_cog("CarroForte")
     if carro_forte_cog:

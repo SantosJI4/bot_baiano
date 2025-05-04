@@ -22,6 +22,30 @@ class Welcome(commands.Cog):
         with open(CONFIG_FILE, "w") as f:
             json.dump(self.config, f, indent=4)
 
+    @commands.command(name="set_welcome_channel")
+    @commands.has_permissions(administrator=True)
+    async def set_welcome_channel(self, ctx, channel: discord.TextChannel):
+        """Define o canal de boas-vindas."""
+        self.config["welcome_settings"]["channel"] = channel.id
+        self.save_config()
+        await ctx.send(f"✅ Canal de boas-vindas definido para {channel.mention}.")
+
+    @commands.command(name="set_welcome_message")
+    @commands.has_permissions(administrator=True)
+    async def set_welcome_message(self, ctx, *, message):
+        """Define a mensagem de boas-vindas."""
+        self.config["welcome_settings"]["text"] = message
+        self.save_config()
+        await ctx.send("✅ Mensagem de boas-vindas atualizada.")
+
+    @commands.command(name="set_welcome_banner")
+    @commands.has_permissions(administrator=True)
+    async def set_welcome_banner(self, ctx, url):
+        """Define o banner de boas-vindas."""
+        self.config["welcome_settings"]["banner"] = url
+        self.save_config()
+        await ctx.send("✅ Banner de boas-vindas atualizado.")
+
     @commands.command(name="welcome_test")
     @commands.has_permissions(administrator=True)
     async def welcome_test(self, ctx):
@@ -73,6 +97,12 @@ class Welcome(commands.Cog):
             embed.set_thumbnail(url=member.guild.icon.url)
 
         await channel.send(embed=embed)
+
+        # Envia uma mensagem privada (DM) para o novo membro
+        try:
+            await member.send(f"👋 Olá, {member.mention}! Seja bem-vindo ao **{member.guild.name}**! 🎉")
+        except discord.Forbidden:
+            pass  # O membro pode ter DMs desativadas
 
 # Função obrigatória para carregar o cog
 async def setup(bot):
