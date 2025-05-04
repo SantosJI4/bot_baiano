@@ -6,3 +6,4 @@ Pillow
 youtube_dl
 transformers
 openai==0.27.8
+akinator.py
