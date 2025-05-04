@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import akinator
+import asyncio
 
 class AkinatorGame(commands.Cog):
     def __init__(self, bot):
