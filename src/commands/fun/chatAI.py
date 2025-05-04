@@ -1,41 +1,36 @@
 import discord
 from discord.ext import commands
-from transformers import AutoModelForCausalLM, AutoTokenizer
-import torch
+import openai
+import os
 
-# Carrega o modelo e o tokenizer da Hugging Face
-tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
-model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-small")
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Usando dispositivo: {device}")
-
+# Carrega a chave da API do OpenAI do arquivo .env
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class ChatAI(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.chat_history = {}  # Armazena o histórico de conversas por usuário
 
     @commands.command(name="chat")
     async def chat(self, ctx, *, prompt):
-        """Conversa com o modelo DialoGPT."""
-        user_id = ctx.author.id
-        if user_id not in self.chat_history:
-            self.chat_history[user_id] = []
+        """Conversa com o ChatGPT usando a API do OpenAI."""
+        await ctx.send("🤖 Processando sua mensagem...")
+        try:
+            # Envia a mensagem para a API do ChatGPT
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",  # Modelo usado
+                messages=[
+                    {"role": "system", "content": "Você é um assistente útil e amigável."},
+                    {"role": "user", "content": prompt},
+                ],
+                max_tokens=150,
+                temperature=0.7,
+            )
 
-        # Adiciona a mensagem do usuário ao histórico
-        self.chat_history[user_id].append(f"User: {prompt}")
-
-        # Tokeniza o histórico de conversa
-        input_ids = tokenizer.encode(" ".join(self.chat_history[user_id]), return_tensors="pt")
-
-        # Gera a resposta
-        response_ids = model.generate(input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
-        response = tokenizer.decode(response_ids[:, input_ids.shape[-1]:][0], skip_special_tokens=True)
-
-        # Adiciona a resposta ao histórico
-        self.chat_history[user_id].append(f"Bot: {response}")
-
-        await ctx.send(f"🤖 {response}")
+            # Resposta do ChatGPT
+            reply = response["choices"][0]["message"]["content"]
+            await ctx.send(f"💬 {reply}")
+        except Exception as e:
+            await ctx.send(f"❌ Ocorreu um erro ao processar sua mensagem: {e}")
 
 async def setup(bot):
     await bot.add_cog(ChatAI(bot))
