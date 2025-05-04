@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import akinator
-import asyncio
 
 class AkinatorGame(commands.Cog):
     def __init__(self, bot):
@@ -14,16 +13,12 @@ class AkinatorGame(commands.Cog):
         await ctx.send("🤔 Pense em um personagem, e eu tentarei adivinhar! Responda com `sim`, `não`, `não sei`, `provavelmente` ou `provavelmente não`. Para encerrar, digite `parar`.")
 
         try:
-            print("Iniciando o jogo do Akinator...")
-            question = self.aki.start_game()
-            print(f"Pergunta inicial: {question}")
+            print("Tentando iniciar o jogo do Akinator...")
+            question = self.aki.start_game(language="pt")  # Especifique o idioma
+            print(f"Pergunta inicial recebida: {question}")
             if not question:
-              await ctx.send("❌ Não consegui iniciar o jogo. Tente novamente mais tarde.")
-              return
-            print(f"Primeira pergunta: {question}")  # Depuração
-        except Exception as e:
-            print(f"Erro ao iniciar o jogo: {e}")
-            await ctx.send(f"❌ Ocorreu um erro ao iniciar o jogo: {e}")
+                await ctx.send("❌ Não consegui iniciar o jogo. Tente novamente mais tarde.")
+                return
 
             # Loop de perguntas
             while self.aki.progression <= 80:
@@ -31,7 +26,7 @@ class AkinatorGame(commands.Cog):
                 try:
                     response = await self.bot.wait_for(
                         "message",
-                        timeout=60.0,  # Tempo limite para resposta
+                        timeout=60.0,
                         check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                     )
                 except asyncio.TimeoutError:
@@ -72,7 +67,8 @@ class AkinatorGame(commands.Cog):
         except akinator.AkiNoQuestions:
             await ctx.send("❌ Não consegui encontrar mais perguntas. Jogo encerrado.")
         except Exception as e:
-            await ctx.send(f"❌ Ocorreu um erro: {e}")
+            print(f"Erro ao iniciar o jogo: {e}")
+            await ctx.send(f"❌ Ocorreu um erro ao iniciar o jogo: {e}")
 
 async def setup(bot):
     await bot.add_cog(AkinatorGame(bot))
