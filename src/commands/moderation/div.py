@@ -1,43 +1,26 @@
 import discord
 from discord.ext import commands
-import asyncio
-import logging
 
-class EventAnnouncement(commands.Cog):
+# filepath: c:\Users\Maurício Santana\Documents\nocookie2.0 - Copia\discord-bot-project\src\commands\moderation\div.py
+
+class Div(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name="divulgar")
-    @commands.has_permissions(administrator=True)
-    async def divulgar_evento(self, ctx, *, mensagem):
-        """Envia uma mensagem de divulgação para as DMs de todos os membros do servidor."""
-        await ctx.send("📢 Iniciando a divulgação do evento...")
+    @commands.command(name="enviar_dm")
+    async def enviar_dm(self, ctx, member: discord.Member, *, mensagem: str):
+        """
+        Envia uma mensagem personalizada na DM de um membro mencionado.
+        Uso: !enviar_dm @usuario Sua mensagem aqui
+        """
+        try:
+            await member.send(mensagem)
+            await ctx.send(f"✅ Mensagem enviada para {member.mention} com sucesso!")
+        except discord.Forbidden:
+            await ctx.send(f"❌ Não foi possível enviar a mensagem para {member.mention}. O usuário pode ter as DMs fechadas.")
+        except Exception as e:
+            await ctx.send(f"❌ Ocorreu um erro ao tentar enviar a mensagem: {e}")
 
-        # Lista de membros que receberam a mensagem
-        enviados = 0
-        erros = 0
-
-        for member in ctx.guild.members:
-            if not member.bot:  # Ignora bots
-                try:
-                    await member.send(f"📢 **Divulgação de Evento:**\n\n{mensagem}")
-                    enviados += 1
-                except discord.Forbidden:
-                    erros += 1  # Não foi possível enviar a mensagem (DM fechada)
-                except Exception as e:
-                    logging.error(f"Erro ao enviar mensagem para {member.name}: {e}")
-
-        await ctx.send(f"✅ Mensagem enviada para {enviados} membros.\n❌ Não foi possível enviar para {erros} membros (DMs fechadas ou sem permissão).")
-
-    @divulgar_evento.error
-    async def divulgar_evento_error(self, ctx, error):
-        """Trata erros no comando de divulgação."""
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send("❌ Você não tem permissão para usar este comando.")
-        elif isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("❌ Por favor, forneça a mensagem de divulgação. Exemplo: `!divulgar <mensagem>`.")
-        else:
-            await ctx.send(f"❌ Ocorreu um erro: {error}")
-
+# Adicione o cog ao bot
 async def setup(bot):
-    await bot.add_cog(EventAnnouncement(bot))
+    await bot.add_cog(Div(bot))
