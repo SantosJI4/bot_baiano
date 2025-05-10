@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
+import asyncio
 
-# filepath: c:\Users\Maurício Santana\Documents\nocookie2.0 - Copia\discord-bot-project\src\commands\moderation\div.py
 
 class Div(commands.Cog):
     def __init__(self, bot):
