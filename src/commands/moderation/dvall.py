@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio  # Import necessário para adicionar delays entre os envios
 
-class Div(commands.Cog):
+class DivAll(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -34,4 +34,4 @@ class Div(commands.Cog):
 
 # Adicione o cog ao bot
 async def setup(bot):
-    await bot.add_cog(Div(bot))
+    await bot.add_cog(DivAll(bot))
