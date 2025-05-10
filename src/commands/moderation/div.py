@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+import asyncio
+import logging
 
 class EventAnnouncement(commands.Cog):
     def __init__(self, bot):
@@ -22,6 +24,8 @@ class EventAnnouncement(commands.Cog):
                     enviados += 1
                 except discord.Forbidden:
                     erros += 1  # Não foi possível enviar a mensagem (DM fechada)
+                except Exception as e:
+                    logging.error(f"Erro ao enviar mensagem para {member.name}: {e}")
 
         await ctx.send(f"✅ Mensagem enviada para {enviados} membros.\n❌ Não foi possível enviar para {erros} membros (DMs fechadas ou sem permissão).")
 
