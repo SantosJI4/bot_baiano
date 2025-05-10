@@ -14,7 +14,7 @@ class Loja(commands.Cog):
         }
         self.tickets = {}  # Armazena os tickets criados
 
-    @commands.command(name="loja")
+    @commands.command(name="shop")
     async def loja(self, ctx):
         """Exibe a página inicial da loja."""
         embed = discord.Embed(
